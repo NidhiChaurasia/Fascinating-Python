@@ -1,42 +1,58 @@
-import tkinter as tk
-from tkinter.filedialog import askopenfilename , asksaveasfilename
+import speech_recognition as sr
+import pyttsx3
+import pywhatkit
+import datetime
+import wikipedia
+import pyjokes
 
-def open_file():
-    filepath = askopenfilename(
-        filetypes=[("Text files","*.txt"),("All files","*.*")])
-    if not filepath:
-        return
-    text_edit.delete(1.0,tk.END)
-    with open(filepath,"r") as input_file:
-        text = input_file.read()
-        text_edit.insert(tk.END,text)
-    window.title(f"My own writing space - {filepath}")
+listener = sr.Recognizer()
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
 
-def save_file():
-    filepath = asksaveasfilename(
-        defaultextension="txt",
-        filetypes=[("Text files","*.txt"),("All files","*.*")])
-    if not filepath:
-        return
-    with open(filepath,"w") as output_file:
-        text = text_edit.get(1.0,tk.END)
-        output_file.write(text)
-    window.title(f"My own writing space - {filepath}")
+def talk(text):
+     engine.say(text)
+     engine.runAndWait()
+def take_command():
+    try:
+        with sr.Microphone() as source:
+             print('listening...')
+             voice = listener.listen(source)
+             command = listener.recognize_google(voice)
+             command = command.lower()
+             if 'siri' in command:
+                 command = command.replace('siri','')
+                 print(command)
+    except:
+        pass
+    return command
 
-window = tk.Tk()
-window.title("My Own writing space")
-window.rowconfigure(0,minsize=800,weight=1)
-window.columnconfigure(1,minsize=800,weight=1)
+def run_siri():
+    command = take_command()
+    print(command)
+    if 'play' in command:
+        song = command.replace('play','')
+        talk('playing' + song)
+        pywhatkit.playonyt(song)
+    elif 'time' in command:
+         time = datetime.datetime.now().strftime('%I:%M %p')
+         print(time)
+         talk('Current time is ' + time)
+    elif 'who is ' in command:
+        person = command.replace('who is','')
+        info = wikipedia.summary(person,1)
+        print(info)
+        talk(info)
+    elif 'you' in command:
+        talk('Hi ! I am your Voice Assistant Siri,How can I help you')
+    elif 'date' in command:
+        talk('Oops I cant come with you')
+    elif 'are you a robot' in command:
+        talk('I am in a relationship with wifi')
+    elif 'joke' in command:
+        talk(pyjokes.get_joke())
+    else:
+        talk('Please say that command again.')
 
-text_edit = tk.Text(window)
-fr_buttons = tk.Frame(window,relief=tk.RAISED,bd=2)
-button_open = tk.Button(fr_buttons, text="OPEN",command=open_file)
-button_save = tk.Button(fr_buttons,text="SAVE AS....",command=save_file)
-
-button_open.grid(row=0,column=0,sticky="ew",padx=5,pady=5)
-button_save.grid(row=1,column=0,sticky="ew",padx=5,pady=5)
-
-fr_buttons.grid(row=0,column=0,sticky="ns")
-text_edit.grid(row=0,column=1,sticky="nsew")
-
-window.mainloop()
+while True:
+     run_siri()
