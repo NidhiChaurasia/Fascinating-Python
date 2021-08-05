@@ -4,7 +4,7 @@ Mini Python Projects made in PyCharm in just 10 minutes and Some Data Science Pr
 I have mentioned several projects that I have made so far to explore and learn Python !
 
 
-##Web Scraping from Static Website using Python.
+## Web Scraping from Static Website using Python.
 
 Basically, Web Scraping is the method of extracting public data from websites.We extract data from the front-end of the website then parse the html data and extract tidy data from it to transform data into required format.Then store it in doc/pdf/csv format of your choice.
 Well,it's a legal task when you are following proper guidelines and extracting only public data.
