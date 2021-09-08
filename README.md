@@ -22,3 +22,11 @@ Step 3: Inspect the page you need to specify the content variable from html whic
 Step 4:  Write python code for scraping.
 
 Step 5: Store the result in desired format(structured format in text/table/graph).
+
+# Spotify Music Recommender System 
+ 
+ For making this mini project you first need to make a spotify developer's account and then fetch your Credentials like Client Id and Client secret Id so that we can use the Spotify Web API to recollect songs based on their genre.
+Click this link to create a spotify developer account:
+https://developer.spotify.com/dashboard/applications
+
+
