@@ -30,7 +30,7 @@ def display_recommendations(response):
         
 def get_recommendations():
     search = ent_search.get()
-    sp = spotipy.Spotify(client_credentials_manager = SpotifyClientCredentials ("9725b4853dbb4d4290ae6b8b71447446","fa4302a5ef7f43119d1ea7c90790a633"))
+    sp = spotipy.Spotify(client_credentials_manager = SpotifyClientCredentials ("#### enter your spotify client id ####","#### Get your secret client id here https://developer.spotify.com/dashboard/applications ####"))
     result = sp.search(q = search, limit =1)
     id_list = [result['tracks']['items'][0]['id']]
     recommendations = sp.recommendations(seed_tracks = id_list, limit = 10)
